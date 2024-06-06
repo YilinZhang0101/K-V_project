@@ -72,6 +72,8 @@ public:
     int find_node(K);
     int insert_node(K, V);
     void delete_node(K);
+
+    void display_skipList();
       
 private:
     int max_level;
@@ -234,7 +236,18 @@ int skipList<K, V>::random_level_generate(){
     return level;
 };
  
-  
+template<typename K, typename V>
+void skipList<K, V>::display_skipList(){
+    for (int i = skipList_level;i >= 0;i --) {
+        std::cout << "level" << i << ":";
+        skipListNode<K, V> *cur = skiplist_head->nextPtr[i];
+        while (cur != NULL) {
+            std::cout << cur->get_key() << ":" << cur->get_value() << ";";
+            cur = cur->nextPtr[i];
+        }
+        std::cout << std::endl;
+    }
+}; 
   
 int main() {
     int N, M, L;
@@ -251,6 +264,7 @@ int main() {
             std::cout << "Insert Failed" << std::endl;
         }
     }
+    skip_list->display_skipList();
      
     for (int i = 0; i < M; i++) {
         int key;
@@ -262,6 +276,8 @@ int main() {
         // }
         skip_list->delete_node(key);
     }
+
+    skip_list->display_skipList();
   
     for (int i = 0; i < L; i++) {
         int key;
@@ -272,5 +288,8 @@ int main() {
             std::cout << "Search Failed" << std::endl;
         }
     }   
+
+    skip_list->display_skipList();
+
     return 0;
 }
